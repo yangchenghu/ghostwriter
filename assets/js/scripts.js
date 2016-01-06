@@ -88,8 +88,11 @@ jQuery(function($) {
 
     $('body').on('click', '.js-ajax-link, .pagination a, .post-tags a, .post-header a', function(e) {
         e.preventDefault();
+        // alert('1111')
 
+        // alert(window.location.host)
         if (loading === false) {
+            // alert('2222')
             var currentState = History.getState();
             var url = $(this).attr('href');
             var title = $(this).attr('title') || null;
@@ -105,21 +108,49 @@ jQuery(function($) {
             
             // If the requested url is not the current states url push
             // the new state and make the ajax call.
+            
+            // alert(url.charAt(url.length-1))
+            if ('/' === url.charAt(url.length-1)) {
+                url = url.slice(0, url.length - 1)
+            };
+
+
             if (url !== currentState.url.replace(/\/$/, "")) {
-                loading = true;
+                // alert('url:' + url)
 
-                // Check if we need to show the post index after we've
-                // loaded the new content
-                if ($(this).hasClass('js-show-index') || $(this).parent('.pagination').length > 0) {
-                    showIndex = true;
-                }
+                // if(url.indexOf(window.location.host) > 0 ) {
+                //     // loading = true;
 
-                NProgress.start();
+                //     // //Check if we need to show the post index after we've
+                //     // //loaded the new content
+                //     // if ($(this).hasClass('js-show-index') || $(this).parent('.pagination').length > 0) {
+                //     //     showIndex = true;
+                //     // }
 
-                History.pushState({}, title, url);
+                //     // NProgress.start();
+
+                //     // History.pushState({}, title, url);
+                //     NProgress.start();
+
+                //     $latestPost.fadeOut(300, function() {
+                //         $postIndex.fadeIn(300);
+                //         NProgress.done();
+                //     });
+
+                //     self.location = url;
+                // }
+                // else {
+                    window.open(url);
+                // }
+                
+
+                // 
+                // self.location=url; 
             } else {
                 // Swap in the latest post or post index as needed
+                // alert('4444')
                 if ($(this).hasClass('js-show-index')) {
+                    // alert('5555')
                     $('html, body').animate({'scrollTop': 0});
 
                     NProgress.start();
@@ -129,6 +160,7 @@ jQuery(function($) {
                         NProgress.done();
                     });
                 } else {
+                    // alert('6666')
                     $('html, body').animate({'scrollTop': 0});
 
                     NProgress.start();
